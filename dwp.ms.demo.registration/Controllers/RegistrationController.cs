@@ -51,9 +51,18 @@ namespace dwp.ms.demo.registration.Controllers
 
         [Route("")]
         [HttpPost]
+        [ProducesResponseType((int)HttpStatusCode.OK)]
+        [ProducesResponseType((int)HttpStatusCode.BadRequest)]
         public async Task<ActionResult<bool>> CreateRegistrationAsync([FromBody]CreateRegistrationCommand createRegistrationCommand)
         {
-            return await _mediator.Send(createRegistrationCommand);
+            bool commandResult = false;
+            commandResult =  await _mediator.Send(createRegistrationCommand);
+            if (!commandResult)
+            {
+                return BadRequest();
+            }
+
+            return Ok();
         }
     }
 }
