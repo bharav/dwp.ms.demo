@@ -112,7 +112,7 @@ namespace dwp.ms.demo.registration.infastructure
         public RegistrationContext CreateDbContext(string[] args)
         {
             var optionsBuilder = new DbContextOptionsBuilder<RegistrationContext>()
-                .UseSqlServer("Server=vivekbharati001\\SQLEXPRESS;Database=TestRegistration;User Id=sa;Password=Password@2019;");
+                .UseSqlServer("Server=.;Database=TestRegistration;Integrated Security=true;");
             return new RegistrationContext(optionsBuilder.Options, new NoMediator());
         }
 
