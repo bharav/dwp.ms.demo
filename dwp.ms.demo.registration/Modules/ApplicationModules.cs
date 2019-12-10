@@ -1,4 +1,5 @@
 ﻿using Autofac;
+using dwp.ms.demo.registration.domain.AggregatesModel;
 using dwp.ms.demo.registration.domain.AggregatesModel.RegistrationAggregate;
 using dwp.ms.demo.registration.infastructure.Repository;
 using dwp.ms.demo.registration.Queries;
@@ -28,6 +29,9 @@ namespace dwp.ms.demo.registration.Modules
 
             builder.RegisterType<RegistrationRepository>()
                 .As<IRegistrationRepository>()
+                .InstancePerLifetimeScope();
+            builder.RegisterType<VehicleForRegRepository>()
+                 .As<IVehicleYetToRegRepository>()
                 .InstancePerLifetimeScope();
 
         }

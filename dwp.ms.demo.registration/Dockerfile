@@ -7,6 +7,9 @@ WORKDIR /src
 COPY ["dwp.ms.demo.registration/dwp.ms.demo.registration.csproj", "dwp.ms.demo.registration/"]
 COPY ["dwp.ms.demo.registration.domain/dwp.ms.demo.registration.domain.csproj", "dwp.ms.demo.registration.domain/"]
 COPY ["dwp.ms.demo.registration.infastructure/dwp.ms.demo.registration.infastructure.csproj", "dwp.ms.demo.registration.infastructure/"]
+COPY ["EventBus/EventBusCL/EventBus.csproj","EventBus/EventBusCL"]
+COPY ["EventBus/EventBusRabbitMQ/EventBusRabbitMQ.csproj","EventBus/EventBusRabbitMQ"]
+COPY ["EventBus/IntegrationEventLogEF/IntegrationEventLogEF.csproj","EventBus/IntegrationEventLogEF"]
 RUN dotnet restore "dwp.ms.demo.registration/dwp.ms.demo.registration.csproj"
 COPY . .
 WORKDIR "/src/dwp.ms.demo.registration"

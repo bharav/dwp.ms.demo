@@ -8,6 +8,19 @@ services:
       - ACCEPT_EULA=Y
     ports:
       - "5433:1433" 
+  vehicle.data:
+    image: mcr.microsoft.com/mssql/server:2017-latest
+    environment:
+      - SA_PASSWORD=Pass@word
+      - ACCEPT_EULA=Y
+    ports:
+      - "5434:1433" 
+
+  rabbitmq:
+    image: rabbitmq:3-management-alpine
+    ports:
+     - "15672:15672"
+
 
   dwp.ms.demo.registration:
     image: ${DOCKER_REGISTRY-}dwpmsdemoregistration
@@ -16,3 +29,16 @@ services:
       dockerfile: dwp.ms.demo.registration/Dockerfile
     depends_on:
       - sql.data
+      - rabbitmq
+
+
+  dwp.ms.demo.vehicle.api:
+    image: ${DOCKER_REGISTRY-}dwpmsdemovehicleapi
+    build:
+      context: .
+      dockerfile: services/dwp.ms.demo.vehicle.api/Dockerfile
+    depends_on:
+      - vehicle.data
+      - rabbitmq
+    ports:
+      - "1431:80"

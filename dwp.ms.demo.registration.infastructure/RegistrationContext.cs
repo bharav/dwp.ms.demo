@@ -16,6 +16,7 @@ namespace dwp.ms.demo.registration.infastructure
     {
         public const string DEFAULT_SCHEMA = "dbo";
         public DbSet<Registration> Registrations { get; set; }
+        public DbSet<VehicleYetToRegister> VehicleYetToRegisters { get; set; }
         private readonly IMediator _mediator;
         private IDbContextTransaction _currentTransaction;
 
@@ -36,7 +37,8 @@ namespace dwp.ms.demo.registration.infastructure
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
             modelBuilder.ApplyConfiguration(new RegistrationEntityConfiguration());
-            
+            modelBuilder.ApplyConfiguration(new VehicleYetToRegisterEntityConfiguration());
+
         }
 
         public async Task<bool> SaveEntitiesAsync(CancellationToken cancellationToken = default(CancellationToken))
