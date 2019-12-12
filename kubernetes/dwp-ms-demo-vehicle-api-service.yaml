@@ -1,0 +1,15 @@
+apiVersion: v1
+kind: Service
+metadata:
+  labels:
+    io.kompose.service: dwp-ms-demo-vehicle-api
+  name: dwp-ms-demo-vehicle-api
+spec:
+  type: LoadBalancer
+  ports:
+  - port: 1431
+    targetPort: 80
+  selector:
+    io.kompose.service: dwp-ms-demo-vehicle-api
+status:
+  loadBalancer: {}

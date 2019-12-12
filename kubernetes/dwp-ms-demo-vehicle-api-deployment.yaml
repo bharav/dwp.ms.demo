@@ -1,0 +1,22 @@
+apiVersion: extensions/v1beta1
+kind: Deployment
+metadata:
+  labels:
+    io.kompose.service: dwp-ms-demo-vehicle-api
+  name: dwp-ms-demo-vehicle-api
+spec:
+  replicas: 1
+  strategy: {}
+  template:
+    metadata:
+      labels:
+        io.kompose.service: dwp-ms-demo-vehicle-api
+    spec:
+      containers:
+      - image: dwpdemoacr.azurecr.io/dwpmsdemovehicleapi:latest
+        name: dwp-ms-demo-vehicle-api
+        ports:
+        - containerPort: 80
+        resources: {}
+      restartPolicy: Always
+status: {}

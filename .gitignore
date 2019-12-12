@@ -351,3 +351,5 @@ MigrationBackup/
 
 # Ionide (cross platform F# VS Code tools) working folder
 .ionide/
+/dwp.ms.demo.registration/charts/dwpmsdemoregistration
+/services/dwp.ms.demo.vehicle.api/charts/dwpmsdemovehicleapi

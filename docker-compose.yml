@@ -3,18 +3,34 @@ version: '3.4'
 services:
   sql.data:
     image: mcr.microsoft.com/mssql/server:2017-latest
+    command: /bin/bash ./entrypoint.sh
     environment:
       - SA_PASSWORD=Pass@word
+      - MSSQL_PID=Express
       - ACCEPT_EULA=Y
     ports:
       - "5433:1433" 
+    volumes:
+      - regis_dbdata:/var/opt/mssql/data
+      - ./db/registration/docker-entrypoint.sh:/entrypoint.sh
+      - ./db/registration/docker-db-init.sh:/db-init.sh
+      - ./db/registration/registration-init.sql:/registration-init.sql
+
   vehicle.data:
     image: mcr.microsoft.com/mssql/server:2017-latest
+    command: /bin/bash ./entrypoint.sh
     environment:
       - SA_PASSWORD=Pass@word
+      - MSSQL_PID=Express
       - ACCEPT_EULA=Y
     ports:
       - "5434:1433" 
+    volumes:
+      - vehicle_dbdata:/var/opt/mssql/data
+      - ./db/vehicle/docker-entrypoint.sh:/entrypoint.sh
+      - ./db/vehicle/docker-db-init.sh:/db-init.sh
+      - ./db/vehicle/vehicle-init.sql:/vehicle-init.sql
+      
 
   rabbitmq:
     image: rabbitmq:3-management-alpine
@@ -42,3 +58,6 @@ services:
       - rabbitmq
     ports:
       - "1431:80"
+volumes:
+ regis_dbdata:
+ vehicle_dbdata:

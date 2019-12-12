@@ -19,6 +19,7 @@ using EventBus.IntegrationEventLogEF.Services;
 using System.Data.Common;
 using Microsoft.Extensions.Options;
 using dwp.ms.demo.vehicle.api.IntegrationEvents;
+using Microsoft.OpenApi.Models;
 
 namespace dwp.ms.demo.vehicle.api
 {
@@ -49,6 +50,11 @@ namespace dwp.ms.demo.vehicle.api
         public void Configure(IApplicationBuilder app, IWebHostEnvironment env, ILoggerFactory loggerFactory)
         {
             var pathBase = Configuration["PATH_BASE"];
+            app.UseSwagger()
+             .UseSwaggerUI(c =>
+             {
+                 c.SwaggerEndpoint($"{ (!string.IsNullOrEmpty(pathBase) ? pathBase : string.Empty) }/swagger/v1/swagger.json", "Vehicle.API V1");
+             });
 
             if (!string.IsNullOrEmpty(pathBase))
             {
@@ -58,13 +64,11 @@ namespace dwp.ms.demo.vehicle.api
             using (var serviceScope = app.ApplicationServices.GetService<IServiceScopeFactory>().CreateScope())
             {
                 var context = serviceScope.ServiceProvider.GetRequiredService<VehicleContext>();
-                context.Database.EnsureCreated();
                 
             }
             using (var serviceScope = app.ApplicationServices.GetService<IServiceScopeFactory>().CreateScope())
             {
                 var context = serviceScope.ServiceProvider.GetRequiredService<IntegrationEventLogContext>();
-                context.Database.EnsureCreated();
 
             }
             if (env.IsDevelopment())
@@ -82,6 +86,7 @@ namespace dwp.ms.demo.vehicle.api
             {
                 endpoints.MapControllers();
             });
+            
         }
 
 
@@ -124,13 +129,12 @@ namespace dwp.ms.demo.vehicle.api
         {
             services.AddSwaggerGen(options =>
             {
-                options.DescribeAllEnumsAsStrings();
-                options.SwaggerDoc("v1", new Swashbuckle.AspNetCore.Swagger.Info
+                //options.DescribeAllEnumsAsStrings();
+                options.SwaggerDoc("v1", new OpenApiInfo
                 {
                     Title = "Vehicle Registration - Vehicle HTTP API",
                     Version = "v1",
-                    Description = "The Vehicle Microservice HTTP API. This is a Data-Driven/CRUD microservice sample",
-                    TermsOfService = "Terms Of Service"
+                    Description = "The Vehicle Microservice HTTP API. This is a Data-Driven/CRUD microservice sample"
                 });
             });
 

@@ -1,0 +1,20 @@
+FROM mcr.microsoft.com/dotnet/core/sdk:3.0
+ARG BUILD_CONFIGURATION=Debug
+ENV ASPNETCORE_ENVIRONMENT=Development
+ENV DOTNET_USE_POLLING_FILE_WATCHER=true
+EXPOSE 80
+
+WORKDIR /src
+COPY ["EventBus/EventBusCL/EventBus.csproj", "EventBus/EventBusCL/"]
+COPY ["EventBus/EventBusRabbitMQ/EventBusRabbitMQ.csproj", "EventBus/EventBusRabbitMQ/"]
+COPY ["EventBus/IntegrationEventLogEF/IntegrationEventLogEF.csproj", "EventBus/IntegrationEventLogEF/"]
+COPY ["services/dwp.ms.demo.vehicle.api/dwp.ms.demo.vehicle.api.csproj", "services/dwp.ms.demo.vehicle.api/"]
+
+RUN dotnet restore "services/dwp.ms.demo.vehicle.api/dwp.ms.demo.vehicle.api.csproj"
+COPY . .
+WORKDIR "/src/services/dwp.ms.demo.vehicle.api"
+RUN dotnet build --no-restore "dwp.ms.demo.vehicle.api.csproj" -c $BUILD_CONFIGURATION
+
+RUN echo "exec dotnet run --no-build --no-launch-profile -c $BUILD_CONFIGURATION --" > /entrypoint.sh
+
+ENTRYPOINT ["/bin/bash", "/entrypoint.sh"]

@@ -24,6 +24,7 @@ using EventBus;
 using dwp.ms.demo.registration.IntegrationEvents.Events;
 using dwp.ms.demo.registration.IntegrationEvents.EventHandler;
 using Swashbuckle.AspNetCore.Swagger;
+using Microsoft.OpenApi.Models;
 
 namespace dwp.ms.demo.registration
 {
@@ -92,7 +93,7 @@ namespace dwp.ms.demo.registration
             using (var serviceScope = app.ApplicationServices.GetService<IServiceScopeFactory>().CreateScope())
             {
                 var context = serviceScope.ServiceProvider.GetRequiredService<RegistrationContext>();
-                context.Database.EnsureCreated();
+                
             }
             if (env.IsDevelopment())
             {
@@ -109,6 +110,11 @@ namespace dwp.ms.demo.registration
             {
                 endpoints.MapControllers();
             });
+            app.UseSwagger()
+             .UseSwaggerUI(c =>
+             {
+                 c.SwaggerEndpoint($"{ (!string.IsNullOrEmpty(pathBase) ? pathBase : string.Empty) }/swagger/v1/swagger.json", "Vehicle.API V1");
+             });
             ConfigureEventBus(app);
         }
 
@@ -146,14 +152,8 @@ namespace dwp.ms.demo.registration
         {
             services.AddSwaggerGen(options =>
             {
-                options.DescribeAllEnumsAsStrings();
-                options.SwaggerDoc("v1", new Swashbuckle.AspNetCore.Swagger.Info
-                {
-                    Title = "Vehicle Registration - Registration HTTP API",
-                    Version = "v1",
-                    Description = "The Registration Microservice HTTP API. This is a Data-Driven/CRUD microservice sample",
-                    TermsOfService = "Terms Of Service"
-                });
+               // options.DescribeAllEnumsAsStrings();
+                options.SwaggerDoc("v1", new OpenApiInfo { Title = "Scouts API", Version = "v1" });
             });
 
             return services;
