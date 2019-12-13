@@ -20,6 +20,8 @@ using System.Data.Common;
 using Microsoft.Extensions.Options;
 using dwp.ms.demo.vehicle.api.IntegrationEvents;
 using Microsoft.OpenApi.Models;
+using dwp.ms.demo.vehicle.api.Infrastructure.Filters;
+using Microsoft.AspNetCore.Mvc;
 
 namespace dwp.ms.demo.vehicle.api
 {
@@ -64,7 +66,7 @@ namespace dwp.ms.demo.vehicle.api
             using (var serviceScope = app.ApplicationServices.GetService<IServiceScopeFactory>().CreateScope())
             {
                 var context = serviceScope.ServiceProvider.GetRequiredService<VehicleContext>();
-                
+
             }
             using (var serviceScope = app.ApplicationServices.GetService<IServiceScopeFactory>().CreateScope())
             {
@@ -86,13 +88,36 @@ namespace dwp.ms.demo.vehicle.api
             {
                 endpoints.MapControllers();
             });
-            
+
         }
 
 
     }
     public static class CustomExtensionMethods
     {
+        public static IServiceCollection AddCustomMvc(this IServiceCollection services)
+        {
+            // Add framework services.
+            services.AddMvc(options =>
+            {
+                options.Filters.Add(typeof(HttpGlobalExceptionFilter));
+            })
+                .SetCompatibilityVersion(CompatibilityVersion.Version_3_0)
+                .AddControllersAsServices();  //Injecting Controllers themselves thru DI
+                                              //For further info see: http://docs.autofac.org/en/latest/integration/aspnetcore.html#controllers-as-services
+
+            services.AddCors(options =>
+            {
+                options.AddPolicy("CorsPolicy",
+                    builder => builder
+                    .SetIsOriginAllowed((host) => true)
+                    .AllowAnyMethod()
+                    .AllowAnyHeader()
+                    .AllowCredentials());
+            });
+
+            return services;
+        }
         public static IServiceCollection AddCustomDbContext(this IServiceCollection services, IConfiguration configuration)
         {
             services.AddDbContext<VehicleContext>(options =>

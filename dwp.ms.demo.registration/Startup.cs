@@ -41,6 +41,7 @@ namespace dwp.ms.demo.registration
         public void ConfigureServices(IServiceCollection services)
         {
             services.AddControllers().SetCompatibilityVersion(CompatibilityVersion.Version_3_0);
+           // services.AddCustomMvc();
             services.AddSwagger();
             services.AddDbContext<RegistrationContext>(options =>
                  {
@@ -148,12 +149,27 @@ namespace dwp.ms.demo.registration
     }
     public static class CustomExtensionMethods
     {
+        public static IServiceCollection AddCustomMvc(this IServiceCollection services)
+        {
+            // Add framework services.
+            services.AddCors(options =>
+            {
+                options.AddPolicy("CorsPolicy",
+                    builder => builder
+                    .SetIsOriginAllowed((host) => true)
+                    .AllowAnyMethod()
+                    .AllowAnyHeader()
+                    .AllowCredentials());
+            });
+
+            return services;
+        }
         public static IServiceCollection AddSwagger(this IServiceCollection services)
         {
             services.AddSwaggerGen(options =>
             {
                // options.DescribeAllEnumsAsStrings();
-                options.SwaggerDoc("v1", new OpenApiInfo { Title = "Scouts API", Version = "v1" });
+                options.SwaggerDoc("v1", new OpenApiInfo { Title = "Registration API", Version = "v1" });
             });
 
             return services;
