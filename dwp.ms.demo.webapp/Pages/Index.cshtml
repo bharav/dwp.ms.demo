@@ -1,0 +1,66 @@
+﻿@page
+@model IndexModel
+@{
+    ViewData["Title"] = "Home page";
+}
+
+
+<h1>Index</h1>
+
+<p>
+    <a asp-page="Registration">Create New</a>
+</p>
+
+<form>
+    <p>
+        Id: <input type="text" asp-for="Id" />
+        <input type="submit" value="Get" />
+    </p>
+</form>
+
+<table class="table">
+
+    <thead>
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.Registration.regNo)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Registration.name)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Registration.chesisNo)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Registration.engineNo)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Registration.address)
+            </th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+        @*@foreach (var item in Model.Registration)
+        {*@
+            <tr>
+                <td>
+                    @Html.DisplayFor(modelItem => Model.Registration.regNo)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => Model.Registration.name)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => Model.Registration.chesisNo)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => Model.Registration.engineNo)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => Model.Registration.address)
+                </td>
+            </tr>
+        @*}*@
+    </tbody>
+</table>
+
