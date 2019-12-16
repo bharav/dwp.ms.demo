@@ -38,7 +38,7 @@ namespace dwp.ms.demo.webapp.Pages
             {
                 HttpClient myClnt = new HttpClient();
                 var URL = _configuration["ApiURL"];
-                HttpResponseMessage response = await myClnt.GetAsync(URL+ Id);
+                HttpResponseMessage response = await myClnt.GetAsync(URL+'/'+ Id);
                 string responseBody = await response.Content.ReadAsStringAsync();
                 Registration = JsonConvert.DeserializeObject<Registration>(responseBody);
                 

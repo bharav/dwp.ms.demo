@@ -13,6 +13,11 @@ namespace dwp.ms.demo.registration.ui.Pages
 {
     public class RegistrationModel : PageModel
     {
+        public IConfiguration _configuration;
+        public RegistrationModel(IConfiguration configuration)
+        {
+           _configuration = configuration;
+        }
         public void OnGet()
         {
 
@@ -30,15 +35,11 @@ namespace dwp.ms.demo.registration.ui.Pages
 
 
             HttpClient myClnt = new HttpClient();
-            /*HttpResponseMessage response  = await myClnt.GetAsync("http://20.43.144.136:1432/api/v1/Registration/1");
-            string responseBody = await response.Content.ReadAsStringAsync();
-            var retData = JsonConvert.DeserializeObject<Registration>(responseBody);
-            return RedirectToPage("./Index");*/
-
+            var URL = _configuration["ApiURL"];
             string stringData = JsonConvert.SerializeObject(Registration);
             var contentData = new StringContent(stringData, System.Text.Encoding.UTF8,
                                    "application/json");
-            HttpResponseMessage response = myClnt.PostAsync("http://20.43.144.136:1432/api/v1/Registration", contentData).Result;
+            HttpResponseMessage response = myClnt.PostAsync(URL, contentData).Result;
            var Message = response.Content.
         ReadAsStringAsync().Result;
             return RedirectToPage("./Index"); 
