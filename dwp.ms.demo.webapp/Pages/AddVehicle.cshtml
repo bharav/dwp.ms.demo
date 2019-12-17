@@ -1,0 +1,59 @@
+﻿@page
+@model dwp.ms.demo.webapp.Pages.AddVehicleModel
+@{
+    ViewData["Title"] = "AddVehicle";
+}
+
+<h1>AddVehicle</h1>
+
+<div class="row">
+    <div class="col-md-4">
+        <form method="post">
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            <div class="form-group">
+                <label asp-for="Vehicle.engineNo" class="control-label">EngineNo</label>
+                <input asp-for="Vehicle.engineNo" class="form-control" />
+                <span asp-validation-for="Vehicle.engineNo" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Vehicle.chesisNo" class="control-label">ChassisNo</label>
+                <input asp-for="Vehicle.chesisNo" class="form-control" />
+                <span asp-validation-for="Vehicle.chesisNo" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Vehicle.modelName" class="control-label">ModelName</label>
+                <input asp-for="Vehicle.modelName" class="form-control" />
+                <span asp-validation-for="Vehicle.modelName" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Vehicle.variant" class="control-label">Variant</label>
+                <input asp-for="Vehicle.variant" class="form-control" />
+                <span asp-validation-for="Vehicle.variant" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Vehicle.manufacturer" class="control-label">Manufacturer</label>
+                <input asp-for="Vehicle.manufacturer" class="form-control" />
+                <span asp-validation-for="Vehicle.manufacturer" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Vehicle.yearOfManufacture" class="control-label">YearOfManufacture</label>
+                <input asp-for="Vehicle.yearOfManufacture" class="form-control" />
+                <span asp-validation-for="Vehicle.yearOfManufacture" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Vehicle.monthOfManufacture" class="control-label">MonthOfManufacture</label>
+                <input asp-for="Vehicle.monthOfManufacture" class="form-control" />
+                <span asp-validation-for="Vehicle.monthOfManufacture" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Vehicle.batchNo" class="control-label">BatchNo</label>
+                <input asp-for="Vehicle.batchNo" class="form-control" />
+                <span asp-validation-for="Vehicle.batchNo" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <input type="submit" value="Submit" class="btn btn-primary" />
+            </div>
+        </form>
+    </div>
+</div>
+

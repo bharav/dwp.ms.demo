@@ -1,0 +1,82 @@
+﻿@page
+@model dwp.ms.demo.webapp.Pages.VehicleModel
+@{
+    ViewData["Title"] = "Vehicle";
+}
+
+<h1>Vehicle</h1>
+
+<p>
+    <a asp-page="AddVehicle">Create New</a>
+</p>
+
+<form>
+    <p>
+        Id: <input type="text" asp-for="EngineNo" />
+        <input type="submit" value="Get" />
+    </p>
+</form>
+
+<table class="table">
+
+    <thead>
+        <tr>
+            <th>
+                EngineNo
+            </th>
+            <th>
+                ModelName
+            </th>
+            <th>
+                ChassisNo
+            </th>
+            <th>
+                Manufacturer
+            </th>
+            <th>
+                Variant
+            </th>
+            <th>
+                BatchNo
+            </th>
+            <th>
+                YearOfMAnufacture
+            </th>
+            <th>
+                MonthOfManufacture
+            </th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+        
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => Model.Vehicle.engineNo)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => Model.Vehicle.modelName)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => Model.Vehicle.chesisNo)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => Model.Vehicle.manufacturer)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => Model.Vehicle.variant)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => Model.Vehicle.batchNo)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => Model.Vehicle.yearOfManufacture)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => Model.Vehicle.monthOfManufacture)
+            </td>
+        </tr>
+       
+    </tbody>
+</table>
+
