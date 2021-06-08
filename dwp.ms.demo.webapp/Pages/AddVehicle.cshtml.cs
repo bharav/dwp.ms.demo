@@ -1,29 +1,30 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Net.Http;
 using System.Threading.Tasks;
+using dwp.ms.demo.webapp.Models;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
-using dwp.ms.demo.webapp.Models;
 using Microsoft.Extensions.Configuration;
-using System.Net.Http;
 using Newtonsoft.Json;
 
-namespace dwp.ms.demo.registration.ui.Pages
+namespace dwp.ms.demo.webapp.Pages
 {
-    public class RegistrationModel : PageModel
+    public class AddVehicleModel : PageModel
     {
         public IConfiguration _configuration;
-        public RegistrationModel(IConfiguration configuration)
+        public AddVehicleModel(IConfiguration configuration)
         {
-           _configuration = configuration;
+            _configuration = configuration;
         }
         public void OnGet()
         {
 
         }
+
         [BindProperty]
-        public Registration Registration { get; set; }
+        public Vehicle Vehicle { get; set; }
 
         public async Task<IActionResult> OnPostAsync()
         {
@@ -32,17 +33,15 @@ namespace dwp.ms.demo.registration.ui.Pages
                 return Page();
             }
 
-
-
             HttpClient myClnt = new HttpClient();
-            var URL = _configuration["ApiURL"];
-            string stringData = JsonConvert.SerializeObject(Registration);
+            var URL = _configuration["ApiURLVehicle"];
+            string stringData = JsonConvert.SerializeObject(Vehicle);
             var contentData = new StringContent(stringData, System.Text.Encoding.UTF8,
                                    "application/json");
             HttpResponseMessage response = myClnt.PostAsync(URL, contentData).Result;
-           var Message = response.Content.
-        ReadAsStringAsync().Result;
-            return RedirectToPage("./Index"); 
+            var Message = response.Content.
+            ReadAsStringAsync().Result;
+            return RedirectToPage("./Vehicle");
         }
     }
 }
